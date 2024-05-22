@@ -1,0 +1,9 @@
+version: '3.6'
+services:
+  pixel-artist-backend:
+    image: pixel-artist-backend
+    build: .
+    ports:
+      - 10000:10000
+    volumes:
+       - $PWD:/app
