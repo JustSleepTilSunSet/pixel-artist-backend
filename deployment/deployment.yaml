@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pixel-artist-backend
+  namespace: pixel-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pixel-artist-backend-app
+  template:
+    metadata:
+      labels:
+        app: pixel-artist-backend-app
+    spec:
+      containers:
+      - name: pixel-artist-backend
+        image: pixel-artist-backend
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 10000
