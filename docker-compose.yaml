@@ -1,6 +1,7 @@
 version: '3.6'
 services:
   pixel-artist-backend:
+    container_name: pixel-artist-backend
     image: pixel-artist-backend
     build: .
     ports:
