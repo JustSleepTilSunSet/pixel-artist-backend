@@ -1,8 +1,11 @@
-from flask import Flask
-from controllers.homeController import home
+from flask import Flask,request
+from flask_cors import CORS
+from controllers.homeController import home, saveImage
 
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:8080"])
 app.add_url_rule('/home', 'home', home, methods=['GET'])
+app.add_url_rule('/saveImage', 'saveImage', saveImage, methods=['POST'])
 
 @app.route("/")
 def hello_world():
