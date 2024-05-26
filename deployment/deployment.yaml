@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: pixel-artist-backend
-        image: pixel-artist-backend
+        image: pixel-artist-backend:1.0
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 10000
