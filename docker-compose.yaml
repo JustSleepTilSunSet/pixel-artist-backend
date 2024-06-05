@@ -4,7 +4,14 @@ services:
     container_name: pixel-artist-backend
     image: pixel-artist-backend
     build: .
+    environment:
+      - STORAGE_EMULATOR_HOST=http://fake-gcs-server:4443
     ports:
       - 10000:10000
     volumes:
        - $PWD:/app
+    networks:
+      - pixel-artist-dev-net
+networks:
+  pixel-artist-dev-net:
+    external: true
