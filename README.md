@@ -5,16 +5,20 @@
   - python version: 3.12.3
 
 ## How to run?
+  
+  - Step0. Create image:
+    - docker build .
+
   - Step0. Create network:
     - docker network create pixel-artist-dev-net
   
   - Step1. Create fake-gcs-server container.
     - NOTE: DONT replace pixel-artist-backend's docker-compose.yaml !
     - 1-1. Rename gcs_docker-compose.yaml to docker-compose.yaml.
-    - 1-2 docker-compose up -d --build
+    - 1-2. docker-compose up -d --build
 
   - Step2. Create pixel-artist-backend.
-    - 1-1 docker-compose up -d --build
+    - 1-1. docker-compose up -d --build
 
   - Step3. To interact with the pixel-artist-backend.
     - docker exec -it pixel-artist-backend sh
@@ -26,7 +30,12 @@
     Step2. flask run --host=0.0.0.0 --port=10000
 
     Step3. To type localhost:10000 on your browser or any client.
-  
+  - Step5(NOT Necessary). Run db
+    - NOTE: DONT replace pixel-artist-backend's docker-compose.yaml ! 
+    - 1-1. Rename db_docker-compose.yaml to docker-compose.yaml.
+    - 1-2. docker-compose up -d --build
+    - 1-3. run http://localhost:8080
+    - 1-4. login with postgres:5432,and root, root.
 ## 確認安裝是否成功：
   - 成功會看到:
     - Connection with gcs established.
