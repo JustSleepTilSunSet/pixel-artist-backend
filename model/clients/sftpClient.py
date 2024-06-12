@@ -46,3 +46,10 @@ def toCloseAllConnect():
     except Exception as e :
         print(f"An error occurred: {e}")
         raise
+
+def uploadFile(fileBin, remotePath):
+    global sftp
+    global ssh
+    with sftp.file(remotePath, 'wb') as remote_file:
+        remote_file.write(fileBin)
+    print("Upload done.")
