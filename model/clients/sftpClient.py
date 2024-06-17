@@ -18,7 +18,7 @@ def sftpConnect():
         print(f"Connecting to {hostname}:{port} with username {username}")
         ssh.connect(hostname, port, username, password)
         sftp = ssh.open_sftp()
-        print("Connected successfully")
+        print("SFTP connected!")
         return sftp
     except Exception as e :
         print(f"An error occurred: {e}")
