@@ -3,7 +3,7 @@ from flask_cors import CORS
 from controllers.homeController import home, saveImage, login, loginByGuest
 import model.clients.gcsClient;
 from model.clients.sftpClient import sftpConnect,getDir;
-
+import model.database.initdb;
 sftpConnect()
 getDir()
 app = Flask(__name__)
