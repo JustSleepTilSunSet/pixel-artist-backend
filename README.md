@@ -49,3 +49,6 @@
   - 有安裝新套件:
     - Step1. pip show new-package.
     - Step2. append package's version to requirements.txt .
+    
+## 其他
+  - 為了養成好的開發習慣，我並沒有公開table的columns的名稱，所以若有需要使用請務必告訴我。
