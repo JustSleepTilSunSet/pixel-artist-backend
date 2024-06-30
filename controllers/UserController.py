@@ -4,15 +4,14 @@ import os
 from model.Secret import Secret;
 from sqlalchemy.orm import sessionmaker
 from model.database.repository.UsersRepository import User
-from model.database.initdb import connectInitDatabase;
+from model.database.initdb import connectInitDatabase,createSession;
 
 def login():
     resp = request.json
     try:
         print(jsonify(resp))
-        engine = connectInitDatabase();
-        Session = sessionmaker(bind=engine)
-        session = Session()
+        connectInitDatabase();
+        session = createSession()
         isVaild = session.query(User).filter_by(account = resp["account"]).first();
 
         if isVaild:
@@ -29,9 +28,8 @@ def login():
 
 def loginByGuest():
     try:
-        engine = connectInitDatabase();
-        Session = sessionmaker(bind=engine)
-        session = Session()
+        connectInitDatabase();
+        session = createSession()
 
         secret = Secret()
         account= secret.generateRandString(16);
