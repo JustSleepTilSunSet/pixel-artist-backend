@@ -5,23 +5,40 @@ from model.Secret import Secret;
 from sqlalchemy.orm import sessionmaker
 from model.database.repository.UsersRepository import User
 from model.database.initdb import connectInitDatabase,createSession;
-from flask_jwt_extended import create_access_token,decode_token
+from flask_jwt_extended import create_access_token, decode_token
 from datetime import timedelta
 import json
 def login():
-    resp = request.json
+        
     try:
-        print(jsonify(resp))
+        # Check the header exist token.
+        isRegistered = True;
+        userInfo = None;
         connectInitDatabase();
-        session = createSession()
-        isVaild = (session.query(User).filter_by(account = resp["account"]).first()) is not None;
-        print("isVaild: ",isVaild);
-        print(isVaild is not True)
-        if isVaild is not True:
-            print("User does not exist.")
-            return jsonify({'status': status["FAIL"], 'message': 'login failed.'})
-        expires = timedelta(minutes=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES_MINUTES")))
-        access_token = create_access_token(identity=json.dumps(resp), expires_delta=expires);
+        session = createSession();
+
+        if request.headers.get('Authorization') is not None:
+            token_type, access_token = request.headers.get('Authorization').split(' ');
+            if token_type == os.getenv("TOKEN_FORMAT"):
+                try:
+                    userInfo = decode_token(access_token)["sub"];
+                    # parse user info.
+                    # NOTICE: Decode and get the user account info.
+                    print(userInfo);
+                    isRegistered = False;
+                except Exception as e:
+                    print(str(e));
+
+        if isRegistered:
+            resp = request.json;
+            # Inserted user setting.
+            session.add(User(account = resp["account"],password = resp["pwd"]));
+            session.commit();
+
+            # Generate token.
+            expires = timedelta(minutes=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES_MINUTES")))
+            access_token = create_access_token(identity=json.dumps(resp), expires_delta=expires);
+            userInfo = decode_token(access_token)["sub"];
 
         return jsonify({'status': status["SUCCESS"], 'message': 'login success',"access_token": access_token})
     except Exception as e:
