@@ -47,9 +47,10 @@ def toCloseAllConnect():
         print(f"An error occurred: {e}")
         raise
 
-def uploadFile(fileBin, remotePath):
+def uploadFile(file_bytes, remotePath):
     global sftp
     global ssh
+    # sftp.putfo(fileBin,remotePath); # save file to sftp by local file.
     with sftp.file(remotePath, 'wb') as remote_file:
-        remote_file.write(fileBin)
+        remote_file.write(file_bytes)
     print("Upload done.")

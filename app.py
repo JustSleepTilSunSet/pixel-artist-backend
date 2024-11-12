@@ -1,7 +1,8 @@
 from flask import Flask,request
 from flask_cors import CORS
 import os
-from controllers.homeController import home, saveImage
+from controllers.homeController import home
+from controllers.PaintingController import saveImage
 from controllers.UserController import login, loginByGuest
 from model.clients.sftpClient import sftpConnect,getDir;
 from model.database.initdb import connectInitDatabase;
