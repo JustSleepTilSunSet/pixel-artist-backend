@@ -26,8 +26,6 @@ def login():
             except Exception as e:
                 session.rollback();
         else:
-            print(resp["pwd"])
-            print(userInfo.password);
             if resp["pwd"] != userInfo.password:
                 return jsonify({'status': status["FAIL"], 'message': 'login failed',"access_token": None});
 
