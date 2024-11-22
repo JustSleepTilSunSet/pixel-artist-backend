@@ -1,6 +1,5 @@
-from flask import Flask, jsonify,request
+from flask import jsonify,request
 from model.Constants import status
-import base64
 from model.clients.sftpClient import uploadFile;
 from flask_jwt_extended import decode_token
 from model.database.initdb import connectInitDatabase,createSession;
