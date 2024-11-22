@@ -46,6 +46,7 @@ services:
     build: .
     environment:
       - STORAGE_EMULATOR_HOST=http://fake-gcs-server:4443
+      - PYTHONDONTWRITEBYTECODE=1
     ports:
       - 10000:10000
     volumes:

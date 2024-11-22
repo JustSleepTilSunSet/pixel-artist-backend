@@ -9,7 +9,7 @@ from flask_jwt_extended import create_access_token, decode_token
 from datetime import timedelta
 import json
 def login():
-        
+
     try:
         # Check the header exist token.
         connectInitDatabase();
