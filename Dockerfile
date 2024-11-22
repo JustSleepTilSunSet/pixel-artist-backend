@@ -5,4 +5,6 @@ WORKDIR '/app'
 RUN pip3 install flask
 COPY . .
 
-CMD tail -f /dev/null
+RUN pip install -r requirements.txt
+CMD ["flask", "run", "--host=0.0.0.0", "--port=10000"]
+EXPOSE 10000
