@@ -50,14 +50,14 @@ def loginByGuest():
         session.add(new_user)
         session.commit()
      
-
+        accountInfo = {};
+        accountInfo["account"] = account;
+        accountInfo["password"] = password;
         # Generate token.
         expires = timedelta(minutes=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES_MINUTES")))
-        access_token = create_access_token(identity=json.dumps(resp), expires_delta=expires);
-
+        access_token = create_access_token(identity=json.dumps(accountInfo), expires_delta=expires);
+        print("access_token:",access_token);
         return jsonify({'status': status["SUCCESS"], 'message': {
-            "account": account,
-            "password": password,
             "access_token": access_token
         }})
     except Exception as e:

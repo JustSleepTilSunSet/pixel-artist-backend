@@ -14,7 +14,7 @@ connectInitDatabase()
 app = Flask(__name__)
 jwt = JWTManager(app)
 app.config['JWT_SECRET_KEY'] = os.getenv("JWT_SECRET_KEY");
-CORS(app, origins=["http://localhost:8081"])
+CORS(app, origins=[os.getenv("CORS_DEV_HOST")])
 app.add_url_rule('/home', 'home', home, methods=['GET'])
 app.add_url_rule('/saveImage', 'saveImage', saveImage, methods=['POST'])
 app.add_url_rule('/user/login', 'login', login, methods=['POST'])
