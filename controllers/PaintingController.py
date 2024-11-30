@@ -32,8 +32,9 @@ def saveImage():
         hash_name = hash_object.hexdigest()
         print("account:", account);
         print("hash_name:", hash_name);
-        uploadFile(file_bytes,'./share/testing.jpeg');
-        session.add(Painting(account = account,paintingName = "testing1.jpeg"));
+        fileName = f'{hash_name}.jpeg';
+        uploadFile(file_bytes,f'./share/{fileName }');
+        session.add(Painting(account = account,paintingName = fileName ));
         session.commit();
 
     except Exception as e:
