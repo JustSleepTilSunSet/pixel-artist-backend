@@ -33,7 +33,7 @@ def saveImage():
         print("account:", account);
         print("hash_name:", hash_name);
         fileName = f'{hash_name}.jpeg';
-        uploadFile(file_bytes,f'./share/{fileName }');
+        uploadFile(file_bytes,f'./share/{fileName}');
         session.add(Painting(account = account,paintingName = fileName ));
         session.commit();
 
