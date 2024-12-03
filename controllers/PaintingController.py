@@ -10,6 +10,9 @@ import json
 # NOTICE: 預檢類型?前端上傳畫作的類型是否唯一？
 def saveImage():
     data = request.files['painting'];
+    customName = request.form.get('paintingName'); # 使用者輸入。
+    paintingDescription = request.form.get('paintingDescription');
+    # print(f"data.paintingName{paintingName} data.paintingDescription{paintingDescription}");
     userToken = request.headers.get('Authorization');
     token = userToken.split('Bearer')[1].strip();
     account = None
@@ -34,7 +37,7 @@ def saveImage():
         print("hash_name:", hash_name);
         fileName = f'{hash_name}.jpeg';
         uploadFile(file_bytes,f'./share/{fileName}');
-        session.add(Painting(account = account,paintingName = fileName ));
+        session.add(Painting(account = account,paintingName = fileName,customName=customName,paintingDescription=paintingDescription ));
         session.commit();
 
     except Exception as e:
