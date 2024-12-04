@@ -2,11 +2,10 @@ from flask import Flask,request
 from flask_cors import CORS
 import os
 from controllers.homeController import home
-from controllers.PaintingController import saveImage
+from controllers.PaintingController import saveImage, listImageById
 from controllers.UserController import login, loginByGuest
 from model.clients.sftpClient import sftpConnect,getDir;
 from model.database.initdb import connectInitDatabase;
-# import model.database.repository.UsersRepository
 from flask_jwt_extended import JWTManager
 sftpConnect()
 getDir()
@@ -17,6 +16,7 @@ app.config['JWT_SECRET_KEY'] = os.getenv("JWT_SECRET_KEY");
 CORS(app, origins=[os.getenv("CORS_DEV_HOST")])
 app.add_url_rule('/home', 'home', home, methods=['GET'])
 app.add_url_rule('/saveImage', 'saveImage', saveImage, methods=['POST'])
+app.add_url_rule('/listImageById', 'listImageById', listImageById, methods=['POST'])
 app.add_url_rule('/user/login', 'login', login, methods=['POST'])
 app.add_url_rule('/user/loginByGuest', 'loginByGuest', loginByGuest, methods=['POST'])
 

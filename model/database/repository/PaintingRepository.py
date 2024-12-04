@@ -12,3 +12,8 @@ class Painting(Base):
     paintingName = paintingName
     paintingDescription = paintingDescription
     customName = customName
+    def to_dict(self):
+       return {
+           "customName": self.customName,
+           "paintingDescription": self.paintingDescription,
+       }
