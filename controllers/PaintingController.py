@@ -7,12 +7,12 @@ from model.database.repository.PaintingRepository import Painting
 import hashlib
 import time
 import json
+
 # NOTICE: 預檢類型?前端上傳畫作的類型是否唯一？
 def saveImage():
     data = request.files['painting'];
     customName = request.form.get('paintingName'); # 使用者輸入。
     paintingDescription = request.form.get('paintingDescription');
-    # print(f"data.paintingName{paintingName} data.paintingDescription{paintingDescription}");
     userToken = request.headers.get('Authorization');
     token = userToken.split('Bearer')[1].strip();
     account = None
@@ -45,3 +45,36 @@ def saveImage():
         return jsonify({'status': status["LOGIN_FAIL"]})
 
     return jsonify({'status': status["SUCCESS"]})
+
+def listImageById():
+    userToken = request.headers.get('Authorization');
+    token = userToken.split('Bearer')[1].strip();
+    paintingRawResult = [];
+    paintingResult = [];
+    paintingCount = 0;
+    try:
+        # Parsed token.
+        userInfo = decode_token(token);
+        account = json.loads(userInfo["sub"])["account"]; # json string to json.
+        # NOTICE: 需要考慮分頁。
+        offset = None;
+        limit = None;
+        print(f'account testing {account}');
+
+        # Create database connected.
+        connectInitDatabase();
+        session = createSession();
+        paintingRawResult = session.query(Painting).filter_by(account=account).all();
+        paintingResult = [row.to_dict() for row in paintingRawResult]  # 假設每行有 to_dict 方法
+        paintingCount = session.query(Painting).filter_by(account=account).count();
+        # print(result[0].account);
+        # print(count);
+    except Exception as e:
+        print(str(e));
+        return jsonify({'status': status["LOGIN_FAIL"]})
+
+    return jsonify({'status': status["SUCCESS"],
+        'data': {
+            'paintingResult': paintingResult,
+            'paintingCount': paintingCount
+        }})
