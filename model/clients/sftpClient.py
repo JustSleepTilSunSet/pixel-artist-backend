@@ -1,6 +1,7 @@
 import paramiko
 from dotenv import dotenv_values
 import os
+import io
 username = os.getenv("SFTP_USER")
 password = os.getenv("SFTP_PWD")
 hostname = os.getenv("SFTP_HOST")
@@ -54,3 +55,18 @@ def uploadFile(file_bytes, remotePath):
     with sftp.file(remotePath, 'wb') as remote_file:
         remote_file.write(file_bytes)
     print("Upload done.")
+
+def getSFTPFile(remotePath):
+    global sftp
+    global ssh
+    try:
+        buffer = io.BytesIO();
+        sftp.getfo(remotePath, buffer);
+        buffer.seek(0);
+        file_content = buffer.read()
+        # print('file_content ',file_content);
+        return file_content
+    except Exception as e :
+        print(f"An error occurred: {e}");
+        raise
+        
