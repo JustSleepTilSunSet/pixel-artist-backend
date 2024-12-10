@@ -4,6 +4,7 @@
   
   1. docker network create pixel-artist-dev-net
   2. docker-compose up -d --build
+
 ## debug:
   
   2. docker exec -it pixel-artist-backend bash

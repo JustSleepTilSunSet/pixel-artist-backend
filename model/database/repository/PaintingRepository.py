@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from model.database.repository.PaintingField import account,paintingName, paintingDescription, customName, paintingPath
+from model.database.repository.PaintingField import account,paintingName, paintingDescription, customName, paintingPath,paintingMap
 import os
 POSTGRES_URI = os.getenv("POSTGRES_URI")
 TABLE_NAME_PAINTING = os.getenv("TABLE_NAME_PAINTING")
@@ -13,6 +13,7 @@ class Painting(Base):
     paintingDescription = paintingDescription
     customName = customName
     paintingPath = paintingPath;
+    paintingMap = paintingMap;
     def to_dict(self):
        return {
            "customName": self.customName,
