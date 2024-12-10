@@ -15,6 +15,7 @@ def saveImage():
     data = request.files['painting'];
     customName = request.form.get('paintingName'); # 使用者輸入。
     paintingDescription = request.form.get('paintingDescription');
+    paintingMap = json.loads(request.form.get('pixelMap'));
     userToken = request.headers.get('Authorization');
     token = userToken.split('Bearer')[1].strip();
     account = None
@@ -41,7 +42,7 @@ def saveImage():
         paintingPath = f'./share/{fileName}';
         print(paintingPath);
         uploadFile(file_bytes,f'./share/{fileName}');
-        session.add(Painting(account = account,paintingName = fileName,customName=customName,paintingDescription=paintingDescription,paintingPath=paintingPath));
+        session.add(Painting(account = account,paintingName = fileName,customName=customName,paintingDescription=paintingDescription,paintingPath=paintingPath,paintingMap=paintingMap));
         session.commit();
 
     except Exception as e:
