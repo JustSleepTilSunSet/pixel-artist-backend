@@ -18,5 +18,5 @@ class Painting(Base):
        return {
            "customName": self.customName,
            "paintingDescription": self.paintingDescription,
-           "paintingPath": self.paintingPath,
+           "paintingPath": self.paintingPath
        }

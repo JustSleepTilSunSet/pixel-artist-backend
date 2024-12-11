@@ -44,12 +44,27 @@ def saveImage():
         uploadFile(file_bytes,f'./share/{fileName}');
         session.add(Painting(account = account,paintingName = fileName,customName=customName,paintingDescription=paintingDescription,paintingPath=paintingPath,paintingMap=paintingMap));
         session.commit();
+        session.close()
 
     except Exception as e:
         print(str(e));
         return jsonify({'status': status["LOGIN_FAIL"]})
 
     return jsonify({'status': status["SUCCESS"]})
+
+def getPixelMapByPath():
+    try:
+        connectInitDatabase();
+        session = createSession();
+        req = request.json;
+        paintingRawResult = session.query(Painting).filter_by(paintingPath=req["paintingPath"]).first();
+        print(f'paintingRawResult: {paintingRawResult}');
+        session.close()
+        # paintingMap = json.loads(request.form.get('pixelMap'));
+        return jsonify({'status': status["SUCCESS"],'pixelMap': paintingRawResult.paintingMap})
+    except Exception as e:
+        print(str(e));
+        return jsonify({'status': status["LOGIN_FAIL"]})
 
 def listImageById():
     userToken = request.headers.get('Authorization');
@@ -72,6 +87,7 @@ def listImageById():
         paintingRawResult = session.query(Painting).filter_by(account=account).all();
         paintingResult = [row.to_dict() for row in paintingRawResult]  # 假設每行有 to_dict 方法
         paintingCount = session.query(Painting).filter_by(account=account).count();
+        session.close()
 
     except Exception as e:
         print(str(e));
@@ -94,4 +110,3 @@ def getImageToBase64():
     except Exception as e:
         print("An exception occured: ",str(e));
         return jsonify({'status': status["LOGIN_FAIL"]})
-    
