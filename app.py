@@ -2,7 +2,7 @@ from flask import Flask,request
 from flask_cors import CORS
 import os
 from controllers.homeController import home
-from controllers.PaintingController import saveImage, listImageById, getImageToBase64,getPixelMapByPath
+from controllers.PaintingController import saveImage, listImageById, getImageToBase64,getPixelMapByPath,toDeletePaintingByPath
 from controllers.UserController import login, loginByGuest
 from model.clients.sftpClient import sftpConnect,getDir;
 from model.database.initdb import connectInitDatabase;
@@ -19,6 +19,7 @@ app.add_url_rule('/saveImage', 'saveImage', saveImage, methods=['POST'])
 app.add_url_rule('/getImageToBase64', 'getImageToBase64', getImageToBase64, methods=['POST'])
 app.add_url_rule('/listImageById', 'listImageById', listImageById, methods=['POST'])
 app.add_url_rule('/getPixelMapByPath', 'getPixelMapByPath', getPixelMapByPath, methods=['POST'])
+app.add_url_rule('/toDeletePaintingByPath', 'toDeletePaintingByPath', toDeletePaintingByPath, methods=['POST'])
 app.add_url_rule('/user/login', 'login', login, methods=['POST'])
 app.add_url_rule('/user/loginByGuest', 'loginByGuest', loginByGuest, methods=['POST'])
 
