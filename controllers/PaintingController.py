@@ -66,6 +66,23 @@ def getPixelMapByPath():
         print(str(e));
         return jsonify({'status': status["LOGIN_FAIL"]})
 
+def toDeletePaintingByPath():
+    try:
+        req = request.json;
+        print(req["paintingPath"]);
+        print(f'paintingPath: {req["paintingPath"]}');
+        connectInitDatabase();
+        session = createSession();
+        session.query(Painting).filter_by(paintingPath=req["paintingPath"]).delete();
+        session.commit();
+        session.close();
+        print(req);
+        session.close();
+        return jsonify({'status': status["SUCCESS"]}) 
+    except Exception as e:
+        print(str(e));
+        return jsonify({'status': status["LOGIN_FAIL"]})
+
 def listImageById():
     userToken = request.headers.get('Authorization');
     token = userToken.split('Bearer')[1].strip();
