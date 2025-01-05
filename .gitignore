@@ -2,3 +2,4 @@ __*
 .DS_Store
 .env
 *Field.*
+*_config.yaml

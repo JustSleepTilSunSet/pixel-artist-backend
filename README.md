@@ -26,16 +26,42 @@
   - kubectl apply -f ./deployment/deployment.yaml -n pixel-dev
     - kubectl get services --all-namespaces
 
-  - minikube service  {service-name} —-url -n pixel-dev
+  - minikube service {service-name} —-url -n pixel-dev
     - minikube service $(echo $(kubectl get pods -n pixel-dev -o custom-columns=":metadata.name")) --url -n pixel-dev
+
+  - `Contact me for build a configmap.`
+
+  - kubectl apply -f ./deployment/minikube_config.yaml -n pixel-dev
+
   - kubectl exec -it {pod-name} -n pixel-dev -- /bin/sh
+
   - minikube service pixel-artist-backend —url -n pixel-dev
 
 #### Minkube maintain:
-  
-  - kubectl rollout restart deployment  -n pixel-dev
+
+  - kubectl rollout restart deployment -n pixel-dev
+    - The cmd will create a new pods.
+
+  - kubectl logs {pod-name}  -n pixel-dev
+
+  - kubectl get configmap [-n pixel-dev]
+
+  - kubectl delete configmap minikube-pixel-artist-config
+
   - kubectl get pods -n pixel-dev
+
   - kubectl exec -it {pod name} -n pixel-dev -c {container} -- /bin/sh
 
+  - kubectl delete pod {pod-name} -n pixel-dev
+
+  - kubectl exec -it {pod-name} -n pixel-dev -c pixel-artist-backend -- /bin/sh
+
+  - kubectl describe pod  {pod-nam} -n pixel-dev
+
+  - kubectl delete pods --all -n pixel-dev
+
+  - kubectl scale deployment pixel-artist-backend --replicas=1 -n pixel-dev
+
 ## Others
+  
   - 為了養成好的開發習慣，我並沒有公開table的columns的名稱，所以若有需要使用請務必告訴我(If you wanna run the app, send a mail to me)。

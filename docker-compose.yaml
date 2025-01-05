@@ -12,7 +12,7 @@ services:
        - gcs_storge:/storage
     networks:
       - pixel-artist-dev-net
-  sftp-mock:
+  # sftp-mock:
     container_name: sftp-mock
     image: atmoz/sftp
     restart: always
@@ -25,7 +25,7 @@ services:
     networks:
       - pixel-artist-dev-net
 
-  postgres:
+  # postgres:
     container_name: postgres
     image: postgres:alpine3.20
     restart: always

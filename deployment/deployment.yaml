@@ -15,7 +15,40 @@ spec:
     spec:
       containers:
       - name: pixel-artist-backend
-        image: pixel-to-minikube:1.0.1
+        image: pixel-to-minikube:1.0.4
         imagePullPolicy: IfNotPresent
+        envFrom:
+          - configMapRef:
+              name: minikube-pixel-artist-config
         ports:
-        - containerPort: 10000
+          - containerPort: 10000
+      - name: sftp-mock
+        image: atmoz/sftp:latest
+        envFrom:
+          - configMapRef:
+              name: minikube-pixel-artist-config
+        ports:
+          - containerPort: 22
+            hostPort: 2222
+        volumeMounts:
+          - name: sftp-data
+            mountPath: /home/user/upload
+      - name: postgres
+        image: postgres:latest
+        ports:
+          - containerPort: 5432
+            hostPort: 5432
+        envFrom:
+          - configMapRef:
+              name: minikube-pixel-artist-config
+        volumeMounts:
+          - name: postgres-data
+            mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: sftp-data
+          emptyDir: {}
+        - name: postgres-data
+          emptyDir: {}
+        # - name: config-volume
+        #   configMap:
+        #     name: minikube-pixel-artist-config
