@@ -56,9 +56,9 @@
 
   - kubectl exec -it {pod-name} [-n pixel-dev] -c pixel-artist-backend -- /bin/sh
 
-  - kubectl describe pod  {pod-nam} -n pixel-dev
+  - kubectl describe pod  {pod-nam} [-n pixel-dev]
 
-  - kubectl delete pods --all -n pixel-dev
+  - kubectl delete pods --all [-n pixel-dev]
 
   - kubectl scale deployment pixel-artist-backend --replicas=1 -n pixel-dev
 
