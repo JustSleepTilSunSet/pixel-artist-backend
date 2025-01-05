@@ -48,13 +48,13 @@
 
   - kubectl delete configmap minikube-pixel-artist-config
 
-  - kubectl get pods -n pixel-dev
+  - kubectl get pods [-n pixel-dev]
 
-  - kubectl exec -it {pod name} -n pixel-dev -c {container} -- /bin/sh
+  - kubectl exec -it {pod name} [-n pixel-dev] -c {container} -- /bin/sh
 
-  - kubectl delete pod {pod-name} -n pixel-dev
+  - kubectl delete pod {pod-name} [-n pixel-dev]
 
-  - kubectl exec -it {pod-name} -n pixel-dev -c pixel-artist-backend -- /bin/sh
+  - kubectl exec -it {pod-name} [-n pixel-dev] -c pixel-artist-backend -- /bin/sh
 
   - kubectl describe pod  {pod-nam} -n pixel-dev
 
