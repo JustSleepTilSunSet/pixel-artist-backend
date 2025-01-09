@@ -2,7 +2,7 @@ from flask import jsonify,request
 from model.Constants import status
 from model.clients.sftpClient import uploadFile;
 from flask_jwt_extended import decode_token
-from model.database.initdb import connectInitDatabase,createSession;
+from model.database.initdb import dbSession;
 from model.database.repository.PaintingRepository import Painting
 from model.clients.sftpClient import getSFTPFile;
 import hashlib
@@ -22,8 +22,7 @@ def saveImage():
 
     try:
         # Check the header exist token.
-        connectInitDatabase();
-        session = createSession();
+        session = dbSession;
 
         userInfo = decode_token(token);
         account = json.loads(userInfo["sub"])["account"]; # json string to json.
@@ -44,7 +43,6 @@ def saveImage():
         uploadFile(file_bytes,f'./share/{fileName}');
         session.add(Painting(account = account,paintingName = fileName,customName=customName,paintingDescription=paintingDescription,paintingPath=paintingPath,paintingMap=paintingMap));
         session.commit();
-        session.close()
 
     except Exception as e:
         print(str(e));
@@ -54,12 +52,10 @@ def saveImage():
 
 def getPixelMapByPath():
     try:
-        connectInitDatabase();
-        session = createSession();
+        session = dbSession;
         req = request.json;
         paintingRawResult = session.query(Painting).filter_by(paintingPath=req["paintingPath"]).first();
         print(f'paintingRawResult: {paintingRawResult}');
-        session.close()
         # paintingMap = json.loads(request.form.get('pixelMap'));
         return jsonify({'status': status["SUCCESS"],'pixelMap': paintingRawResult.paintingMap})
     except Exception as e:
@@ -71,13 +67,10 @@ def toDeletePaintingByPath():
         req = request.json;
         print(req["paintingPath"]);
         print(f'paintingPath: {req["paintingPath"]}');
-        connectInitDatabase();
-        session = createSession();
+        session = dbSession;
         session.query(Painting).filter_by(paintingPath=req["paintingPath"]).delete();
         session.commit();
-        session.close();
         print(req);
-        session.close();
         return jsonify({'status': status["SUCCESS"]}) 
     except Exception as e:
         print(str(e));
@@ -99,12 +92,10 @@ def listImageById():
         print(f'account testing {account}');
 
         # Create database connected.
-        connectInitDatabase();
-        session = createSession();
+        session = dbSession;
         paintingRawResult = session.query(Painting).filter_by(account=account).all();
         paintingResult = [row.to_dict() for row in paintingRawResult]  # 假設每行有 to_dict 方法
         paintingCount = session.query(Painting).filter_by(account=account).count();
-        session.close()
 
     except Exception as e:
         print(str(e));
