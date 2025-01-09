@@ -15,8 +15,10 @@ def connectInitDatabase():
         raise
 
 def createSession():
-    
     engine = connectInitDatabase();
     Session = sessionmaker(bind=engine)
     session = Session()
     return session
+
+connectInitDatabase();
+dbSession = createSession();
