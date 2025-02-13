@@ -3,7 +3,9 @@
 ## How to run?
   
   1. docker network create pixel-artist-dev-net
-  2. docker-compose up -d --build
+  2. docker volume create sftp_mock_data
+  3. docker volume create gcs_storge
+  4. docker-compose up -d --build
 
 ## debug(in Docker):
   
